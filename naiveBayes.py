@@ -2,6 +2,8 @@ import collections
 import csv
 
 # Parses the dataset into 3 different 2d defaultdicts
+
+
 def parseData(setosa, versicolor, virginica):
     with open('IRIS.csv') as csvfile:
 
@@ -29,6 +31,7 @@ def parseData(setosa, versicolor, virginica):
                 virginica[virginicaCount][2] = row[2]
                 virginica[virginicaCount][3] = row[3]
                 virginicaCount = virginicaCount + 1
+    return [setosaCount, versiCount, virginicaCount, setosaCount + versiCount + virginicaCount, ]
 
 # DELETE THIS EVENTUALLY
 def prettyPrint(toPrint):
@@ -42,9 +45,11 @@ def prettyPrint(toPrint):
 # Column 2: Petal Length
 # Column 3: Petal Width
 setosaDict = collections.defaultdict(lambda: collections.defaultdict(float))
-versicolorDict = collections.defaultdict(lambda: collections.defaultdict(float))
+versicolorDict = collections.defaultdict(
+    lambda: collections.defaultdict(float))
 virginicaDict = collections.defaultdict(lambda: collections.defaultdict(float))
 
-parseData(setosaDict, versicolorDict, virginicaDict)
-
+# Parses the data and stores the count for each flower type
+# These counts will be used later in the naive bayes calcuation
+counts = parseData(setosaDict, versicolorDict, virginicaDict)
 
