@@ -4,8 +4,6 @@ import csv
 # Parses the data and stores the count for each flower type
 # Returns counts that will be used later in the naive bayes calcuation
 # [0] = setosaCount, [1] = versiCount, [2] = virginicaCount, [3], totalCount
-
-
 def parseData(setosa, versicolor, virginica):
     with open('IRIS.csv') as csvfile:
 
@@ -35,8 +33,6 @@ def parseData(setosa, versicolor, virginica):
 # 2: 1/2(mean) -> mean
 # 3: mean -> 3/2(mean)
 # 4: 3/2(mean) -> infinity
-
-
 def categorizeData(dict, i, j, mean, halfMean, threeHalfMean):
     toChange = float(dict[i][j])
     if(0 <= toChange and toChange < halfMean):
@@ -49,8 +45,6 @@ def categorizeData(dict, i, j, mean, halfMean, threeHalfMean):
         dict[i][j] = 4
 
 # Sets up four categories (1, 2, 3, 4) for each column to make the data discrete
-
-
 def makeDiscrete(setosa, versicolor, virginica, counts):
     toReturn = []
     # 4 for the 4 columns
