@@ -142,7 +142,7 @@ def calculateProbabilities(trainingData):
                 elif (toCount == 4):
                     countOfFour += 1
 
-            # Adding 1 for smoothing
+            # Adding 1 for smoothing  (Not true smoothing more so because cant take the log of 0)
             entryAmount = len(trainingData[k])
             countOfOne = (countOfOne + 1) / entryAmount
             countOfTwo = (countOfTwo + 1) / entryAmount
