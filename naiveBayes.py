@@ -142,17 +142,17 @@ def calculateProbabilities(trainingData):
                 elif (toCount == 4):
                     countOfFour += 1
 
-            entryAmount = len(trainingData[k])
-            countOfOne = countOfOne / entryAmount
-            countOfTwo = countOfTwo / entryAmount
-            countOfThree = countOfThree / entryAmount
-            countOfFour = countOfFour / entryAmount
-
             # Adding 1 for smoothing
-            probabilities[k][0][j] = countOfOne + 1
-            probabilities[k][1][j] = countOfTwo + 1
-            probabilities[k][2][j] = countOfThree + 1
-            probabilities[k][3][j] = countOfFour + 1
+            entryAmount = len(trainingData[k])
+            countOfOne = (countOfOne + 1) / entryAmount
+            countOfTwo = (countOfTwo + 1) / entryAmount
+            countOfThree = (countOfThree + 1) / entryAmount
+            countOfFour = (countOfFour + 1) / entryAmount
+
+            probabilities[k][0][j] = countOfOne
+            probabilities[k][1][j] = countOfTwo
+            probabilities[k][2][j] = countOfThree
+            probabilities[k][3][j] = countOfFour
 
     return probabilities
 
@@ -207,6 +207,13 @@ def classify(toClassify, trainingData, means):
 
     return toReturn
 
+def prettyPrint(results):
+    for i in range(len(results)):
+        print(str(i) + ':\t' + results[i])
+
+def prettyPrint2(toPrint):
+    for row in toPrint:
+        print(toPrint[row])
 
 # Note: For all tables
 # Column 0: Sepal Length
@@ -229,3 +236,4 @@ means = makeDiscrete(trainingData)
 testData = parseTestData('IRIS.csv')
 
 results = classify(testData, trainingData, means)
+prettyPrint(results)
