@@ -144,10 +144,10 @@ def calculateProbabilities(trainingData):
 
             # Adding 1 for smoothing  (Not true smoothing more so because cant take the log of 0)
             entryAmount = len(trainingData[k])
-            countOfOne = (countOfOne + 1) / entryAmount
-            countOfTwo = (countOfTwo + 1) / entryAmount
-            countOfThree = (countOfThree + 1) / entryAmount
-            countOfFour = (countOfFour + 1) / entryAmount
+            countOfOne = (countOfOne + 1) / (entryAmount + 1)
+            countOfTwo = (countOfTwo + 1) / (entryAmount + 1)
+            countOfThree = (countOfThree + 1) / (entryAmount + 1)
+            countOfFour = (countOfFour + 1) / (entryAmount + 1)
 
             probabilities[k][0][j] = countOfOne
             probabilities[k][1][j] = countOfTwo
