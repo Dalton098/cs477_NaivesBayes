@@ -174,6 +174,7 @@ def classify(toClassify, trainingData, means):
 
     probabilities = calculateProbabilities(trainingData)
 
+    # Categorizing the data that is too be classified
     for j in range(4):
 
         mean = means[j]
@@ -215,11 +216,12 @@ def prettyPrint2(toPrint):
     for row in toPrint:
         print(toPrint[row])
 
-# Note: For all tables
+# Note: 
 # Column 0: Sepal Length
 # Column 1: Sepal Width
 # Column 2: Petal Length
 # Column 3: Petal Width
+
 setosaDict = collections.defaultdict(lambda: collections.defaultdict(float))
 versicolorDict = collections.defaultdict(
     lambda: collections.defaultdict(float))
@@ -237,3 +239,26 @@ testData = parseTestData('IRIS.csv')
 
 results = classify(testData, trainingData, means)
 prettyPrint(results)
+
+
+# Uncomment this section and comment the section above to run the classifier
+# on the data being split into training and test data.
+# -------------------------------------------------------------------------------------
+
+# setosaDict = collections.defaultdict(lambda: collections.defaultdict(float))
+# versicolorDict = collections.defaultdict(
+#     lambda: collections.defaultdict(float))
+# virginicaDict = collections.defaultdict(lambda: collections.defaultdict(float))
+
+# trainingData = []
+# trainingData.append(setosaDict)
+# trainingData.append(versicolorDict)
+# trainingData.append(virginicaDict)
+
+# parseTrainingData(trainingData, 'training1.csv')
+# means = makeDiscrete(trainingData)
+
+# testData = parseTestData('test1.csv')
+
+# results = classify(testData, trainingData, means)
+# prettyPrint(results)
