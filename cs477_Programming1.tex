@@ -1,0 +1,102 @@
+%%%%%%%% ICML 2019 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2019} with \usepackage[nohyperref]{icml2019} above.
+\usepackage{hyperref}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+\usepackage{icml2019}
+
+% If accepted, instead use the following line for the camera-ready submission:
+%\usepackage[accepted]{icml2019}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Naive Bayes Classification}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Naive Bayes Classification Using the Iris Data Set}
+
+\begin{center}
+    Dalton Rothenberger
+\end{center}
+
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2019
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{Machine Learning, ICML}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+ % otherwise use the standard text.
+
+\section{Introduction}
+\quad Naive Bayes is a method of using features to contribute independently to the probability that some set of features belongs under a specific classification. The individual probabilities of the features given a specific class are multiplied together to produce the overall probability that the set of features falls under that class. This calculation is then repeated for all the other classes and whichever class produces the highest probability is the class that is selected for classification.
+
+\section{Setup and Methodology}
+\quad For this Naive Bayes Classifier, the Iris Data Set was used which is available
+\href{https://archive.ics.uci.edu/ml/datasets/iris}{here}. The data contains three different plants inside it which will be the classifications for our Naive Bayes Classifier. The three classifications are Iris-setosa, Iris-versicolor, and Iris-virginica. Also, each entry in the data set has four columns associated with it and the four columns are sepal length, sepal width, petal length, and petal width.
+This data was parsed into a Python program and loaded into a 3-D array. The rows of this 3-D array were individual entries, the columns were the different feature types, and the layers were the different classes. Since the data was continuous it had to be made into discrete points for Naive Bayes. To accomplish this, binning was used. The binning was done based off of the mean for each feature. All the entries for a given feature were counted up and divided by the total to calculate the mean. Then break points for four bins were created from the mean. For bin 1, it was from $0$ to $\frac{mean}{2}$. For bin 2, it was from $\frac{mean}{2}$ to $mean$. For bin 3, it was from $mean$ to $\frac{3 * mean}{2}$. For bin 4, it was anything greater than $\frac{3*mean}{2}$. This binning was applied to both the training data and test data. The means calculated while binning the training data were used in the binning of the test data. The probabilities for each bin was calculated for each plant for every given feature and stored into another 3-D array. This was done so that the calculation for these probabilities was only done once for a given set of test data. These probabilities were then used to classify every entry in the given test data using Naive Bayes with log probability to prevent underflow. The probabilities for the 3 classes of plants were compared and whichever had the greatest probability was selected as the classification.
+
+\section{Results and Analysis}
+\quad Using the Iris data set as both the training data and test data at the same time resulted in 145 correct classifications out of 150 total. This means an accuracy of $96.67\%$. At first, this surprised me since it was using the same data to learn as it was to test but after looking at what the entries I understood what was happening. All five cases occurred between Iris-versicolor and Iris-virginica. Iris-versicolor and Iris-virginica had values that were relatively close together. The five cases were extremes where the features for a given Iris-versicolor were larger than most other Iris-versicolor or the features for a given Iris-virginica were smaller than most other Iris-virginica. This resulted in the entries of the given plant being binned into a different category than most others for that plant. Thus, when calculating the probabilities this resulted in the wrong plant having a higher probability than the correct classification resulting in a wrong classification.
+
+\quad When splitting the data into a set of training data and a set of test data that was representative of the training set, the classifier had $100\%$ accuracy with 0 wrong classifications. The data was split so that 120 entries, 40 entries from each plant type, were used as training data and 30 entries, 10 entries from each plant type, were used as test data. Also, running Vowpal Wabbit against this setup of the data resulted in 30 correct predictions out of 30 examples, thus a $100\%$ accuracy for its predictions.
+
+\section{Conclusion}
+\quad The Naive Bayes classifier worked well with the Iris Data set. It was able to properly classify the plants for average cases but not at the extremes of each plant type. The Naive Bayes classifier leaves room for improvement when it comes to classification. If the data points were closer together between all the plants this could have caused even more wrong classifications. The binning technique as well could have been improved to create more diverse categories to separate the data even more. Overall, the Naive Bayes classifier works well in a simple scenario like this but the "naive" part of its name is there for a reason.
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was created
+% by Iain Murray in 2018, and modified by Alexandre Bouchard in
+% 2019. Previous contributors include Dan Roy, Lise Getoor and Tobias
+% Scheffer, which was slightly modified from the 2010 version by
+% Thorsten Joachims & Johannes Fuernkranz, slightly modified from the
+% 2009 version by Kiri Wagstaff and Sam Roweis's 2008 version, which is
+% slightly modified from Prasad Tadepalli's 2007 version which is a
+% lightly changed version of the previous year's version by Andrew
+% Moore, which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.
